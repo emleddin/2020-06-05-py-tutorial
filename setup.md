@@ -61,4 +61,24 @@ conda install mdanalysis
 ```
 {: .language-python}
 
+## AMBERTools for Structure Preparation
+
+### Conda Installation of Tools Binaries
+
+AMBERTools has added a Python-based installation for the tools binaries.
+It should work for Linux and MacOS, but is not a true substitute for the
+full AMBERTools code.
+It is fine for the purposes of this tutorial.
+
+```
+conda install -c conda-forge ambertools
+```
+{: .language-python}
+
+### Full Source Code
+
+The full source-code can be downloaded from the
+[AMBER website](https://ambermd.org/AmberTools.php).
+This is the version that should be linked with an AMBER distribution.
+
 {% include links.md %}
