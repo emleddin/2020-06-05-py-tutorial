@@ -21,7 +21,9 @@ There is an
 This is meant as an introduction to the basics.
 
 ## Importing OpenMM into Python
+
 This portion assumes you have already installed the appropriate version of OpenMM to your specific environment.  OpenMM is CUDA-compatible, and [different versions](https://anaconda.org/omnia/openmm) are available depending on which version of CUDA you're using.
+
 ~~~
 import simtk as omm
 from simtk.openmm.app import *
