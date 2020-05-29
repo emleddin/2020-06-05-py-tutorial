@@ -2,6 +2,10 @@
 title: Setup
 ---
 
+**Highlights**
+* TOC
+{:toc}
+
 ## Obtain the Lesson Materials
 All files have been made available
 [on GitHub](https://github.com/emleddin/2020-06-05-files).
@@ -60,6 +64,28 @@ conda config --add channels conda-forge
 conda install mdanalysis
 ```
 {: .language-python}
+
+### Installing Into an Environment
+
+`OpenMM` and `MDAnalysis` have a number of dependencies, and sometimes they
+conflict with what packages are currently installed.
+If you've previously installed Anaconda, then it is advised that you create
+a conda environment for these tutorials.
+If you've never used the environments feature before, you'll need to run
+`conda init <SHELL>` to properly reset your `~/.bashrc` (ex. `conda init bash`).
+
+```
+conda create --name openmm2020 python=3.6
+conda activate openmm2020
+conda install -c omnia -c conda-forge openmm
+conda install mdanalysis -c conda-forge
+```
+{: .language-python}
+The `name` section can be anything, you're not limited to `openmm2020`, and
+the `python` version can be whatever the newest version of 3.X is installed.
+
+In the future, you use the environment by running `conda activate openmm2020`.
+To leave the environment, run `conda deactivate`.
 
 ## AMBERTools for Structure Preparation
 

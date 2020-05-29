@@ -23,6 +23,10 @@ for indents."
 - "Exit command-line Python with `quit()` or `exit()`, including the parentheses."
 ---
 
+**Highlights**
+* TOC
+{:toc}
+
 ## Python Packages and the `import` Command
 Python has some basic commands (referred to lovingly as "base Python"), but
 those are often not enough for what you want to to with Python.

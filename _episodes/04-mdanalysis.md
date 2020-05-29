@@ -12,6 +12,10 @@ keypoints:
 - "First key point. Brief Answer to questions. (FIXME)"
 ---
 
+**Highlights**
+* TOC
+{:toc}
+
 There is a
 [real MDAnalysis tutorial](https://www.mdanalysis.org/MDAnalysisTutorial/index.html).
 This is more of "highlights" lesson.

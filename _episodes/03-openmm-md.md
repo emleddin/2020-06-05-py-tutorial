@@ -1,6 +1,6 @@
 ---
 title: "OpenMM"
-teaching: 0
+teaching: 30
 exercises: 0
 questions:
 - "How do you set up an OpenMM molecular dynamics simulation in Python?"
@@ -15,6 +15,10 @@ objectives:
 keypoints:
 - "OpenMM in Python can make use of GPUs to perform molecular dynamics simulations."
 ---
+
+**Highlights**
+* TOC
+{:toc}
 
 There is an
 [OpenMM tutorial site](http://openmm.org/tutorials/index.html) with some additional "cookbook" style tutorials.
@@ -50,25 +54,23 @@ inpcrd = app.AmberInpcrdFile("protein.inpcrd")
 OpenMM requires several pieces of information to get started, but assigning variables in stages can help keep things organized (and also easy to modify for future use.)
 
 ~~~
-platform = Platform.getPlatformByName('CUDA') #This assumes you're using a CUDA-enabled version of OpenMM
-properties = {'CudaPrecision': 'mixed'}
 system = prmtop.createSystem(nonbondedMethod = app.PME,         # Using Particle-mesh Ewald
-                             nonbondedCutoff = 1.0\*nanometers, # with a 10 Angstrom cutoff distance
+                             nonbondedCutoff = 1.0*nanometers, # with a 10 Angstrom cutoff distance
                              constraints = app.HBonds,          # keeping bonds between hydrogens and heavy atoms at a fixed length
                              ewaldErrorTolerance = 0.001,       # setting the error tolerance for the Ewald
                              rigidWater = False,                # letting waters be flexible instead of solid triangles
-                             removeCMMotion = True              # maintains the center of the periodic box at the center of mass
+                             removeCMMotion = True)             # maintains the center of the periodic box at the center of mass
 ~~~
 {: .language-python}
 
 You'll also want to set up your thermostat to run in NVT (and add a barostat to run in NPT).
 
 ~~~
-thermostat = LangevinIntegrator(300\*kelvin, 1/picoseconds, 0.001\*picoseconds)
+thermostat = LangevinIntegrator(300*kelvin, 1/picoseconds, 0.001*picoseconds)
     # Temperature, Friction Coefficient, Timestep
     # This will be added to the larger simulation
 
-barostat = MonteCarloBarostat(1.0\*atmosphere, 300.0*kelvin, 25)
+barostat = MonteCarloBarostat(1.0*atmosphere, 300.0*kelvin, 25)
     # Pressure, Temperature (only used for calculation), Frequency (how frequently the system should update the box size)
 system.addForce(barostat)
     # The barostat is added directly to the system rather than the larger simulation.
@@ -79,7 +81,7 @@ If you need distance or angle restraints between atoms, you can add them here.
 
 ~~~
 distance_restraints = HarmonicBondForce()
-distance_restraints.addBond(index1, index2, distance\*angstroms,force\*kilocalories_per_mole/angstomrs\*\*2)
+distance_restraints.addBond(index1, index2, distance\*angstroms,force\*kilocalories_per_mole/angstroms\*\*2)
     # First atom index (python starts at zero!), Second atom index, Distance, Force Constant
     # You can use as many addBond() function calls as you like, if there are multiple distances to restrain.  
     # But be careful not to duplicate any, as they won't overwrite each other, just additively stack up.
@@ -100,9 +102,8 @@ Now we need to set up the entire simulation with what we've done so far.
 ~~~
 sim = Simulation(prmtop.topology, # The topology of the system
                  system,          # The system itself, with all the restraints, barostat, etc.
-                 thermostat,      # The thermostat, in this case the LangevinIntegrator we established before
-                 platform,        # The CUDA environment
-                 properties)      # Settings for the environment
+                 thermostat)      # The thermostat, in this case the LangevinIntegrator we established before
+
 sim.context.setPositions(inpcrd.getPositions(asNumpy=True))
     # Gets the starting position for every atom in the system and initializes the simulation
 sim.context.getState(getPositions=True, enforcePeriodicBox=True).getPositions()
