@@ -79,8 +79,91 @@ If you need distance or angle restraints between atoms, you can add them here.
 
 ~~~
 distance_restraints = HarmonicBondForce()
+distance_restraints.addBond(index1, index2, distance\*angstroms,force\*kilocalories_per_mole/angstomrs\*\*2)
+    # First atom index (python starts at zero!), Second atom index, Distance, Force Constant
+    # You can use as many addBond() function calls as you like, if there are multiple distances to restrain.  
+    # But be careful not to duplicate any, as they won't overwrite each other, just additively stack up.
+system.addForce(distance_restraints)
+    # Add the collection of distance restraints to your system.
+    
 angle_restraints = HarmonicAngleForce()
+angle_restraints.addAngle(index1, index2, index3, angle, force\*kilocalories_per_mole/radians\*\*2)
+    # First, second, and third atom indices, with the second atom as the vertex of the angle, the desired angle in radians, and the force constant.
+    # As above, add as many angle restraints as you need, but be careful not to duplicate them.
+system.addForce(angle_restraints)
+    # Add the collection of angle restraints to the system.
 ~~~
 {: .language-python}
+
+Now we need to set up the entire simulation with what we've done so far.
+
+~~~
+sim = Simulation(prmtop.topology, # The topology of the system
+                 system,          # The system itself, with all the restraints, barostat, etc.
+                 thermostat,      # The thermostat, in this case the LangevinIntegrator we established before
+                 platform,        # The CUDA environment
+                 properties)      # Settings for the environment
+sim.context.setPositions(inpcrd.getPositions(asNumpy=True))
+    # Gets the starting position for every atom in the system and initializes the simulation
+sim.context.getState(getPositions=True, enforcePeriodicBox=True).getPositions()
+    # Establishes the periodic boundary conditions of the system based on the box size.
+sim.reporters.append(StateDataReporter("output.log",            # filename to save the state data into.
+                                       1000,                    # number of steps between each save.
+                                       step = True,             # writes the step number to each line
+                                       time = True,             # writes the time (in ps)
+                                       potentialEnergy = True,  # writes the potential energy of the system (KJ/mole)
+                                       kineticEnergy = True,    # writes the kinetic energy of the system (KJ/mole)
+                                       totalEnergy = True,      # writes the total energy of the system (KJ/mole)
+                                       temperature = True,      # writes the temperature (in K)
+                                       volume = True,           # writes the volume (in nm^3)
+                                       density = True))         # writes the density (in g/mL)
+                                       
+sim.reporters.append(CheckpointReporter("molecule.chk",10000))  # Updates the checkpoint file every 10,000 steps
+
+sim.reporters.append(DCDReporter("trajectory.dcd",10000))       # Adds another frame to the CHARMM-formatted DCD (which can be easily 
+                                                                # converted to .mdcrd by cpptraj) every 10,000 timesteps.
+                                                                # It's good practice to keep the trajectory and checkpoint on the same
+                                                                # write frequency, in case you need to stop a job and resume it later.
+~~~
+{: .language-python}
+
+We have now set up the entire system for running molecular dynamics!  But first, as is good practice, we want to minimize the system first to clear any potential clashes between atoms and residues.
+
+~~~
+sim.minimizeEnergy(maxIterations=2000) 
+~~~
+{: .language-python}
+
+You can set the maxIterations to whatever value you want, but be careful not to minimize for too long, as you can wind up starting from a structure that may be very different from your original files.
+From here, you can begin the actual MD portion.
+
+~~~
+sim.step(1000000) #This instructs the program to take 1,000,000 timesteps, which corresponds to 1.0 ns of MD based on a 1fs timestep.
+~~~
+{: .language-python}
+
+Be careful here, as this will write the entire trajectory to a single file as it goes.  It's a good idea to save backups along the way, especially if you're restarting from checkpoints.  Otherwise, the program will overwrite the file when you resume simulation, and you can lose the data.  
+
+## Restarting a Simulation from a Checkpoint
+
+Sometimes we may want to pick up a simulation where we left off.  This requires only some slight modifications to the process.  Most of the script you built above can be used, with a few exceptions.  First, **remove the following portion**, as we no longer want the starting positions determined by the .inpcrd file.
+
+~~~
+sim.context.setPositions(inpcrd.getPositions(asNumpy=True))
+    # Gets the starting position for every atom in the system and initializes the simulation
+~~~
+{: .language-python}
+
+Next, add this section immediately before declaring the checkpoint file to use going forward.
+
+~~~
+with open("restart.chk",'rb') as f:
+    sim.context.loadCheckpoint(f.read())
+~~~
+{: .language-python}
+
+You will also want to remove the line that minimizes the system, as you no longer want this to happen.  Afterwards, the rest of the script is the same.  You may notice that the "restart.chk" file is differently named than the normal checkpoint file we declared before.  You can technically use the same checkpoint file to restart and immediately begin overwriting, but this has its own risks in case something goes wrong.  By making a copy of the checkpoint and restarting from the copy, you have a separate backup that will allow for mistakes without losing data (Author speaks from painful experience here!)
+
+At this point, you should be able to set up an OpenMM simulation from start to finish, including resuming a stopped simulation.
 
 {% include links.md %}
