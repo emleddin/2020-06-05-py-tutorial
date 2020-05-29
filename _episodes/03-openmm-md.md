@@ -67,7 +67,7 @@ You'll also want to set up your thermostat to run in NVT (and add a barostat to 
 thermostat = LangevinIntegrator(300\*kelvin, 1/picoseconds, 0.001\*picoseconds)
     # Temperature, Friction Coefficient, Timestep
     # This will be added to the larger simulation
-    
+
 barostat = MonteCarloBarostat(1.0\*atmosphere, 300.0*kelvin, 25)
     # Pressure, Temperature (only used for calculation), Frequency (how frequently the system should update the box size)
 system.addForce(barostat)
@@ -85,7 +85,7 @@ distance_restraints.addBond(index1, index2, distance\*angstroms,force\*kilocalor
     # But be careful not to duplicate any, as they won't overwrite each other, just additively stack up.
 system.addForce(distance_restraints)
     # Add the collection of distance restraints to your system.
-    
+
 angle_restraints = HarmonicAngleForce()
 angle_restraints.addAngle(index1, index2, index3, angle, force\*kilocalories_per_mole/radians\*\*2)
     # First, second, and third atom indices, with the second atom as the vertex of the angle, the desired angle in radians, and the force constant.
@@ -117,10 +117,10 @@ sim.reporters.append(StateDataReporter("output.log",            # filename to sa
                                        temperature = True,      # writes the temperature (in K)
                                        volume = True,           # writes the volume (in nm^3)
                                        density = True))         # writes the density (in g/mL)
-                                       
+
 sim.reporters.append(CheckpointReporter("molecule.chk",10000))  # Updates the checkpoint file every 10,000 steps
 
-sim.reporters.append(DCDReporter("trajectory.dcd",10000))       # Adds another frame to the CHARMM-formatted DCD (which can be easily 
+sim.reporters.append(DCDReporter("trajectory.dcd",10000))       # Adds another frame to the CHARMM-formatted DCD (which can be easily
                                                                 # converted to .mdcrd by cpptraj) every 10,000 timesteps.
                                                                 # It's good practice to keep the trajectory and checkpoint on the same
                                                                 # write frequency, in case you need to stop a job and resume it later.
@@ -132,7 +132,7 @@ sim.reporters.append(DCDReporter("trajectory.dcd",10000))       # Adds another f
 We have now set up the entire system for running molecular dynamics!  But first, as is good practice, we want to minimize the system first to clear any potential clashes between atoms and residues.
 
 ~~~
-sim.minimizeEnergy(maxIterations=2000) 
+sim.minimizeEnergy(maxIterations=2000)
 ~~~
 {: .language-python}
 

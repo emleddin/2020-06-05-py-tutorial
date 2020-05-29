@@ -9,13 +9,14 @@ simulations with OpenMM, and using MDAnalysis for trajectory analysis.
 <!-- this is an html comment -->
 
 {% comment %} This is a comment in Liquid {% endcomment %}
-{% comment %} > [lesson 3]({{ page.root }}{% link _episodes/03-openmm.md %}), {% endcomment %}
+{% comment %} > [lesson 3]({{ page.root }}{% link _episodes/03-openmm-md.md %}), {% endcomment %}
 
 > ## Prerequisites
 >
 > Students should be familiar with using the Terminal to execute commands,
 > as well as creating and editing text files.
-> The workshop was designed to start from FIXME.
+> The workshop was designed to start from
+> [lesson 3]({{ page.root }}{% link _episodes/03-openmm-md.md %}).
 > Lessons 1-2, as well as the extra episodes, contain additional background
 > information for students that are  unfamiliar with biomolecular simulation
 > and/or Python.

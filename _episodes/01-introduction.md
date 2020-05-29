@@ -4,8 +4,8 @@ teaching: 35
 exercises: 25
 questions:
 - "What are Python packages?"
-- "How do I use variables?"
 - "What are comments and docstrings?"
+- "How do I use variables?"
 - "What are if statements, for loops, and counters?"
 - "How do I write a function in Python?"
 objectives:
@@ -15,11 +15,12 @@ objectives:
 - "Import Python packages."
 keypoints:
 - "Use `import` to load in Python packages."
-- "**Python starts indexing at 0 (zero).**"
 - "Comments are evoked through `#`, and docstrings are evoked through `\"\"\" \"\"\"`."
+- "**Python starts indexing at 0 (zero).**"
 - "Indentation levels are very important for Python, and 4 spaces should be used
 for indents."
-- "The `\\` is a line continuation mark."
+- "The `\\` is a line continuation mark, as well as the escape character."
+- "Exit command-line Python with `quit()` or `exit()`, including the parentheses."
 ---
 
 ## Python Packages and the `import` Command
@@ -42,6 +43,139 @@ When you need to use a package for a specific purpose, you need to
 > * [Software Carpentry Programming with Python](http://swcarpentry.github.io/python-novice-inflammation)
 > * [Software Carpentry Plotting and Programming in Python](http://swcarpentry.github.io/python-novice-gapminder)
 >
+{: .callout}
+
+## Comments and Docstrings
+
+If you're familiar with writing code, hopefully the importance of adding
+comments has been stressed to you.
+If this is your first time dabbling in coding, comments are arguably more
+important than the code itself.
+Comments provide information and reasoning for the actual code itself.
+They are offset from the rest of the code with a specific symbol (or symbols).
+In Python, a comment is made with the `#` (pound/hashtag/octothrope) symbol.
+
+```
+# This is my first comment
+```
+{: .language-python}
+
+The nice thing about Python is that you can stack those symbols into your own
+personal commentary style, or use the `#` symbol to create fancy comment blocks.
+
+```
+## I comment almost everything with 2 # symbols. It makes it clear to me that
+## it's a comment.
+## Note: the # symbol is only for single-line comments, so each line needs
+## its own mark!!!!
+
+#-----------------------------------------#
+#      Insert pretty comment block        #
+#-----------------------------------------#
+```
+{: .language-python}
+
+Multiline commenting is possible in Python, but through something known as a
+docstring.
+They're called docstrings because they are strings used for documentation
+purposes.
+Most projects (open and not) require coders to write docstrings for their
+functions, though they may have their own formatting for those docstrings.
+A docstring is generated through either three single or double quotes that both
+begin and end the docstring.
+
+~~~
+"""
+This is a docstring
+"""
+
+'''
+This is also docstring
+'''
+
+"""I can even do them in-line, but I don't know what I'd want to."""
+
+'''The only rules are that you be consistent and escape characters other times
+that you\'d want them.'''
+~~~
+{: .language-python}
+
+The last segment of the above example talks about using an escape character.
+In Python, the escape character is `\`.
+
+## Data Types
+
+There are a number of different data types in Python, but a few robustly
+used types.
+This is by no means an exhaustive list, as new data types
+[can be created](https://docs.python.org/3/extending/newtypes.html).
+
+| Data Type | Common Word | Brief explanation |
+|-----------|-------------|------------------------|
+| str       | string      | Strings are things like filenames or text. `x = "Thing"` |
+| int       | integer     | A typical integer. `x = 1`  |
+| float     | float       | Floats are real numbers. `x = 1.` and `x = 1.0` are both floats. |
+| bool      | boolean     | `True` or `False` |
+| dict      | dictionary  | Useful for holding data that needs to be paired, like school and abbreviation. These are known as key-value pairs.  |
+| list      | list        | Similar to an array, but of undefined length. They can be changed. |
+| tuple     | tuple       | Like a list, but cannot be changed. |
+
+The `type()` command will return the type of a variable.
+```
+x = 5
+type(x)
+```
+{: .language-python}
+
+```
+<class 'int'>
+```
+{: .output}
+
+There are times where you need to change a data type, like needing a
+number input option to be read as an integer.
+This is done with the "Data Type" specified above.
+You can either resave the value of that variable as the new type, or use
+it as part of a different command for a temporary change.
+
+```
+x = "5"
+x = int(x)
+
+y = 1
+y = float(y)
+```
+{: .language-python}
+
+> ## Trouble Spot: Integers and Floats
+>
+> One easy way to get tripped up in Python is to use an integer when a float
+> is needed and vice versa.
+> If you input `1.`, then you need a float input, and Python will complain
+> about receiving an integer input.
+>
+> ~~~
+> >>> x = 5.
+> >>> for i in range(x):
+> >>>     print(i)
+> Traceback (most recent call last):
+>   File "<stdin>", line 1, in <module>
+> TypeError: 'float' object cannot be interpreted as an integer
+> ~~~
+> {: .output}
+>
+> Now, it will render as expected by forcing `x` to be an integer for the loop.
+>
+> ~~~
+> >>> for i in range(int(x)):
+> >>>    print(i)
+> 0
+> 1
+> 2
+> 3
+> 4
+> ~~~
+> {: .output}
 {: .callout}
 
 ## Variables
@@ -331,6 +465,5 @@ In this case, the numbers are the same.
 > ~~~
 > {: .output}
 {: .callout}
-
 
 {% include links.md %}

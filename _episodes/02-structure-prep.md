@@ -20,6 +20,12 @@ ring flips."
 atoms) based on residue definitions."
 ---
 
+> ## Where are the files?
+>
+> Check out the web
+>
+{: .prereq}
+
 ## PDB Structure Background
 
 The `ATOM` and `HETATM` records in a PDB file contain the relevant information
