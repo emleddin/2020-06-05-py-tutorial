@@ -127,6 +127,8 @@ sim.reporters.append(DCDReporter("trajectory.dcd",10000))       # Adds another f
 ~~~
 {: .language-python}
 
+## Running the Molecular Dynamics Simulation
+
 We have now set up the entire system for running molecular dynamics!  But first, as is good practice, we want to minimize the system first to clear any potential clashes between atoms and residues.
 
 ~~~
