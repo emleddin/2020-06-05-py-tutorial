@@ -14,6 +14,8 @@ title: "Additional Resources"
 
 * [OpenMM](http://openmm.org/documentation.html)
 * [MDAnalysis](https://www.mdanalysis.org/docs/)
+* [Pandas](https://pandas.pydata.org/pandas-docs/stable/index.html)
+* [Matplotlib](https://matplotlib.org/)
 
 ## Other Tutorials/Workshops
 

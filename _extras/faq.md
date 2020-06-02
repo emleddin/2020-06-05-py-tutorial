@@ -21,9 +21,18 @@ permalink: /faq/index.html
 *Does this work on both CPUs and GPUs?*
 :    Yep.
 
+*How do I "baby the simulations"?*
+;    FIXME
+
 *Does MPI for Python exist?*
 :    Boy howdy does it. You can read more in the [MPI for Python](M4py)
      documentation.
+
+*What's this 0.999 nanosecond thing about?*
+:    FIXME
+
+*If I were going to start doing this full time, what quirks or problem areas should I be aware of?*
+:    FIXME
 
 ## MDAnalysis
 

@@ -77,6 +77,18 @@ keypoints:
 prereq:
 
 
+Units
+-----
+Angstrom: &#8491;
+kcal per mol: kcal mol<s>-1</s>
+Not equals: &#8800;
+Plus minus: &#177;
+Right arrow: &rarr;
+Degree: &deg;
+Registered: &reg;
+Smiley (HTML): &#x1F603;
+
+
 Link section
 ------------
 [shown-text](#page-url-goes-here)

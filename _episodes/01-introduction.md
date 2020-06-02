@@ -14,18 +14,58 @@ objectives:
 - "Describe common formatting rules for Python."
 - "Import Python packages."
 keypoints:
+- "Python can be run interactively, through a script, or in a notebook form."
 - "Use `import` to load in Python packages."
 - "Comments are evoked through `#`, and docstrings are evoked through `\"\"\" \"\"\"`."
 - "**Python starts indexing at 0 (zero).**"
 - "Indentation levels are very important for Python, and 4 spaces should be used
-for indents."
+for indents. Indent levels are critical for `if` statements and `for` loops."
+- "`if` statements and `for` loops should each end the opening line with a `:`
+(colon)."
+- "It is a common convention to use non-plural/plural pairs for `for` loops."
+- "Updating a variable with addition can be achieved through `+=`."
 - "The `\\` is a line continuation mark, as well as the escape character."
+- "The phrase keyword arguments (for functions) is sometimes shorted to
+`**kwargs`."
 - "Exit command-line Python with `quit()` or `exit()`, including the parentheses."
 ---
 
 **Highlights**
 * TOC
 {:toc}
+
+## Running Python Code
+Python code can be run using a Python prompt (likely evoked through `python3`,
+but that might be different depending on what versions are installed on your
+device).
+If you're running a Jupyter Notebook or a Google CoLab Notebook, code
+cells will run in the default Python shell (and can be changed to specific
+versions).
+
+```
+user@host$ python3
+Python 3.7.3 (default, Mar 27 2019, 16:54:48)
+[Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+```
+{: .language-bash}
+
+To run a Python script, you would use that specific prompt command with the
+name of the script you are trying to run.
+
+```
+user@host$ python3 my_cool_script.py
+```
+{: .language-bash}
+
+If you're not sure what the Python you're using, but you've installed Anaconda3,
+go to `/anaconda3/bin` and see which executables are there.
+If you're having issues running the code provided, but know you have Python3
+installed, run `which python` to see what version is being sourced.
+It is not recommended that you change your default Python installation,
+because this can have serious repercussions for your operating system.
+Instead, save it to an alias that you call when you need to run Python3.
 
 ## Python Packages and the `import` Command
 Python has some basic commands (referred to lovingly as "base Python"), but
@@ -308,6 +348,7 @@ Some notes about what happened there:
 - Integers differ from floats with the extra `.`
 - The `\` character is a line continuation mark. It is a good practice to keep
 lines under 80 characters.
+- Python **will** complain if the `:` (colon) is not there.
 
 `elif` and `else` are not required for every `if statement`.
 Say we had a Python script that wrote to the file `file123.txt`.
@@ -334,8 +375,137 @@ output_file = file123.txt
 ```
 {: .output}
 
+Another important word is `continue`.
+`continue` is great if you know when you *don't* want something to happen in
+one specific case, but you do need it for every other case.
+
+```
+## Give a mouse a cookie, but only if they haven't already have a cookie
+
+if cookie == True:
+    continue
+else:
+    cookie == True
+```
+{: .language-python}
+
+Similarly, if you need to exit out of the statements and move on in the code
+when something specific happens (like receiving an input that would crash a
+program), you can use `break`.
+
 ## For Loops and Counters
-FIXME
+
+`for` loops control iterations.
+In Python, `for` loops start use indents to keep the information within the
+loop contained.
+Typically, these look like `for x in y:`.
+Again, Python **will** complain if there isn't a colon.
+```
+coin_list = ["quarter", "dime", "nickel", "penny", "half-dollar",
+    "golden dollar"]
+
+for coin in coin_list:
+    print(coin)
+```
+{: .language-python}
+
+```
+quarter
+dime
+nickel
+penny
+half-dollar
+golden dollar
+```
+{: .output}
+
+In the above example, the `for` loop was initiated with `for coin in coin_list:`.
+However, the use of `coin` is irrelevant--it was just a placeholder variable.
+Many people like to use `i` for their `for` loop indexing, and it could have
+just as easily been `for i in coin_list`.
+However, in that case, swapping out `coin` for `i` must also be done within
+the `for` loop itself.
+Otherwise, you'll get a `name is not defined` error.
+
+```
+>>> coin_list = ["quarter", "dime", "nickel", "penny", "half-dollar",
+...     "golden dollar"]
+>>>
+>>> for i in coin_list:
+...     print(coin)
+...
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+NameError: name 'coin' is not defined
+```
+{: .output}
+
+The other common initiation of a `for` loop in Python is with the `range()`
+command.
+
+```
+for x in range(5):
+    print(x)
+```
+{: .language-python}
+
+```
+0
+1
+2
+3
+4
+```
+{: .output}
+
+Sometimes it is necessary to keep a count within code, or otherwise update
+a variable through addition or substration.
+After setting a variable to an initial value, you can update it with `+=`
+or `-=`.
+This means that  `x += 1` can take the place of `x = x + 1` (spaces optional).
+
+```
+y = 0
+for x in range(5):
+    y += 1
+print(y)
+```
+{: .language-python}
+
+```
+5
+```
+{: .output}
+
+> ## Combining Ifs and Fors
+>
+> Write a for loop that reads in a list of 5 items and does not print anything
+> for one of them.
+>
+> > ## One Solution for Combining Ifs and Fors
+> >
+> > There are many, many ways to write code. This is just one solution.
+> >
+> > ~~~
+> > MD_programs = ['AMBER', 'CHARMM', 'GROMACS', 'LAMMPS', 'TINKER']
+> >
+> > for program in MD_programs:
+> >     if program == "TINKER":
+> >         continue
+> >     else:
+> >         print("You don't have to convert from {} format to XYZ. Yet.".format(program))
+> > ~~~
+> > {: .language-python}
+> >
+> > ~~~
+> > You don't have to convert from AMBER format to XYZ. Yet.
+> > You don't have to convert from CHARMM format to XYZ. Yet.
+> > You don't have to convert from GROMACS format to XYZ. Yet.
+> > You don't have to convert from LAMMPS format to XYZ. Yet.
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 ## Functions
 

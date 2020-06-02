@@ -15,6 +15,8 @@ objectives:
 keypoints:
 - "OpenMM in Python can make use of GPUs to perform molecular dynamics
 simulations."
+- "If you continue a simulation from a checkpoint file, it is **highly advised**
+that you use a different filename for future checkpoint files."
 ---
 
 **Highlights**

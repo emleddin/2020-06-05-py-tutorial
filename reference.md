@@ -30,6 +30,10 @@ Docstring
 : Short for documentation string, it provides a long form for commenting and
 otherwise describing code.
 
+Keyword Argument (\*\*kwarg)
+: An argument that is signaled with a keyword for Python functions. An example
+is passing the number of atoms to a system (`system(elements, natom=123)`).
+
 String
 : Text-based things like filenames or text. `x = "Thing"`
 
