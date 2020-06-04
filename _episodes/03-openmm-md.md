@@ -3,7 +3,7 @@ title: "OpenMM"
 teaching: 30
 exercises: 0
 questions:
-- "How do you set up an OpenMM molecular dynamics simulation in Python?"
+- "How do I set up an OpenMM molecular dynamics simulation in Python?"
 - "What information can OpenMM provide as the simulation is running?"
 objectives:
 - "Load simulation inputs into Python."

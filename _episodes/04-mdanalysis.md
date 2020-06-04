@@ -5,6 +5,8 @@ exercises: 5
 questions:
 - "How are structure and trajectory files read with Python?"
 - "What is an atom group?"
+- "How do I apply analyses to residues, instead of individual atoms?"
+- "How can tabular data files and plots be generated with Python?"
 objectives:
 - "Load structures and trajectories into Python."
 - "Use AtomGroups to make selections of atoms."

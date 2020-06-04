@@ -3,9 +3,10 @@ title: "Structure Preparation"
 teaching: 120
 exercises: 0
 questions:
-- "How do you make a structure biologically relevant?"
+- "How do I make a structure biologically relevant?"
 - "Do I need to add hydrogens?"
 - "Where do parameters come from?"
+- "How do I add ions and solvate a system?"
 objectives:
 - "Modify a crystal structure to reflect realistic protonation states."
 - "Check a structure for clashes."
